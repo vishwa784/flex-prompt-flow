@@ -1,15 +1,15 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Paperclip, Send, Calculator, TrendingUp, FileText, Users } from 'lucide-react';
+import { Paperclip, Send, Calculator, TrendingUp, FileText } from 'lucide-react';
 import { FinancialSliders } from './FinancialSliders';
-import { BudgetChart } from './BudgetChart';
 import { UsageCounter } from './UsageCounter';
-import { ReportGenerator } from './ReportGenerator';
+import { DarkModeToggle } from './DarkModeToggle';
 
 export const CFOHelper = () => {
+  const navigate = useNavigate();
   const [prompt, setPrompt] = useState('');
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [scenarios, setScenarios] = useState(0);
@@ -34,17 +34,29 @@ export const CFOHelper = () => {
   const handleSubmit = () => {
     if (prompt.trim()) {
       setScenarios(prev => prev + 1);
-      // Here you would process the financial query
-      console.log('Processing financial scenario:', prompt, currentScenario);
+      navigate('/results', {
+        state: {
+          scenario: currentScenario,
+          prompt: prompt,
+          type: 'analysis'
+        }
+      });
     }
+  };
+
+  const handleGenerateReport = () => {
+    setReports(prev => prev + 1);
+    navigate('/results', {
+      state: {
+        scenario: currentScenario,
+        prompt: prompt || 'Generate comprehensive financial report',
+        type: 'report'
+      }
+    });
   };
 
   const handleScenarioChange = (newScenario: typeof currentScenario) => {
     setCurrentScenario(newScenario);
-  };
-
-  const handleReportGenerated = () => {
-    setReports(prev => prev + 1);
   };
 
   return (
@@ -62,7 +74,10 @@ export const CFOHelper = () => {
                 <p className="text-sm text-muted-foreground">AI-Powered Financial Scenario Planning</p>
               </div>
             </div>
-            <UsageCounter scenarios={scenarios} reports={reports} />
+            <div className="flex items-center space-x-4">
+              <UsageCounter scenarios={scenarios} reports={reports} />
+              <DarkModeToggle />
+            </div>
           </div>
         </div>
       </header>
@@ -145,17 +160,39 @@ export const CFOHelper = () => {
               scenario={currentScenario}
               onChange={handleScenarioChange}
             />
-
-            {/* Budget Chart */}
-            <BudgetChart scenario={currentScenario} />
           </div>
 
-          {/* Right Column - Report & Controls */}
+          {/* Right Column - Quick Stats & Generate Report */}
           <div className="space-y-6">
-            <ReportGenerator 
-              scenario={currentScenario}
-              onReportGenerated={handleReportGenerated}
-            />
+            {/* Generate Report Button */}
+            <Card className="shadow-card-hover">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-8 h-8 bg-success/10 rounded-full flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-success" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Generate Report</h3>
+                    <p className="text-sm text-muted-foreground">Create detailed financial analysis</p>
+                  </div>
+                </div>
+                
+                <Button 
+                  onClick={handleGenerateReport}
+                  variant="success"
+                  className="w-full flex items-center space-x-2"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Generate Full Report</span>
+                </Button>
+                
+                <div className="mt-4 p-3 bg-accent/50 rounded-lg">
+                  <p className="text-xs text-muted-foreground">
+                    Includes P&L analysis, forecasts, charts, and AI recommendations
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
             
             {/* Quick Stats */}
             <Card>
