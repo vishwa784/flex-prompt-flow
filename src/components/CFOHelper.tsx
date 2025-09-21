@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Paperclip, Send, Calculator, TrendingUp, FileText } from 'lucide-react';
+import { Paperclip, Send, Calculator, TrendingUp, FileText, Instagram } from 'lucide-react';
 import { FinancialSliders } from './FinancialSliders';
 import { UsageCounter } from './UsageCounter';
 import { DarkModeToggle } from './DarkModeToggle';
@@ -247,8 +247,27 @@ export const CFOHelper = () => {
       <footer className="border-t border-border bg-card mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              Created by <span className="font-semibold text-primary">Vishwa</span> & <span className="font-semibold text-primary">Vishnu</span>
+            <p className="text-sm text-muted-foreground flex items-center justify-center gap-2 flex-wrap">
+              Created by 
+              <a 
+                href="https://www.instagram.com/vishwasaikurimilla?utm_source=qr&igsh=cmZyNmxpcXp1NXpv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline flex items-center gap-1"
+              >
+                <Instagram className="w-4 h-4" />
+                Vishwa
+              </a>
+              &
+              <a 
+                href="https://www.instagram.com/vishnuteja_derangula?igsh=NzMwcnZubDF0NG4w"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline flex items-center gap-1"
+              >
+                <Instagram className="w-4 h-4" />
+                Vishnu
+              </a>
             </p>
           </div>
         </div>
