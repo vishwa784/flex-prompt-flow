@@ -242,6 +242,17 @@ export const CFOHelper = () => {
           </div>
         </div>
       </div>
+      
+      {/* Footer */}
+      <footer className="border-t border-border bg-card mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              Created by <span className="font-semibold text-primary">Vishwa</span> & <span className="font-semibold text-primary">Vishnu</span>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
